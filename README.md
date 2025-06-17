@@ -1,9 +1,16 @@
 # 🔍 AI-Powered Fake News Detector
 
-A high-performance, multi-model fake news detection system that combines traditional machine learning, transformer-based models like RoBERTa, and rule-based approaches to deliver robust, explainable fake news detection.
+A high-performance, multi-model fake news detection system that combines traditional machine learning, transformer-based models like **RoBERTa**, and rule-based approaches to deliver **robust** and **explainable** fake news detection.
+
+🎯 **Key Features:**
+- Hybrid architecture using ML, NLP, and transformer-based models
+- Explainable results with rule-based and probabilistic outputs
+- Built with performance and transparency in mind
 
 🚀 **[Launch the App](https://fakenewsdetectorpy-passiveaggresive.streamlit.app/)**  
-> **Note:** The RoBERTa model may run slower on Streamlit Cloud due to CPU-only processing (no GPU acceleration).
+> ⚠️ *Note: The RoBERTa model may run slower on Streamlit Cloud due to CPU-only processing (no GPU acceleration).*
+
+📺 **[Watch Demo Video](https://youtu.be/HgOg7ztfMWA)**
 
 ---
 
