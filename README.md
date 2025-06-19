@@ -1,373 +1,173 @@
 # 🔍 AI-Powered Fake News Detector
 
-A high-performance, multi-model fake news detection system that combines traditional machine learning, transformer-based models like **RoBERTa**, and rule-based approaches to deliver **robust** and **explainable** fake news detection.
-
-🎯 **Key Features:**
-- Hybrid architecture using ML, NLP, and transformer-based models
-- Explainable results with rule-based and probabilistic outputs
-- Built with performance and transparency in mind
+A high-performance system for detecting fake news using a unique blend of classic machine learning, modern AI, and rule-based methods. This project is designed for accuracy, speed, and transparency, providing clear, explainable results.
 
 🚀 **[Launch the App](https://fakenewsdetectorpy-passiveaggresive.streamlit.app/)**  
-> ⚠️ *Note: The RoBERTa model may run slower on Streamlit Cloud due to CPU-only processing (no GPU acceleration).*
+📺 **[Watch the Demo Video](https://youtu.be/HgOg7ztfMWA)**
 
-📺 **[Watch Demo Video](https://youtu.be/HgOg7ztfMWA)**
-
----
-
-## 📊 Intended Output (Tested on a 200-Sample Test Set)
-
-<img src="https://github.com/user-attachments/assets/05053478-b8d1-408b-b14a-f50e013d6aa8" width="400"/>  
-<img src="https://github.com/user-attachments/assets/0233ea38-0e7f-46e2-874c-447faf9c0eef" width="400"/>  
-<img src="https://github.com/user-attachments/assets/603ac113-7806-41b1-899e-7ef05d26b8f3" width="400"/>  
+> ⚠️ *Note: The app may run slower on Streamlit Cloud because it uses CPU processing. The RoBERTa model in particular benefits from GPU acceleration.*
 
 ---
 
-## 🏗️ System Architecture
+## 🎯 Key Features
+
+- **Hybrid Approach:** Combines three different models (Classic ML, Modern Transformer, and Rule-Based) for comprehensive analysis.
+- **High Accuracy:** The primary model achieves **99.0% accuracy** on the test dataset.
+- **Explainable Results:** Understand *why* an article is flagged, with outputs from keyword analysis and model confidence scores.
+- **Interactive Interface:** A user-friendly web app built with Streamlit for easy testing and evaluation.
+
+## 🏗️ How It Works: System Architecture
+
+The system processes input text through three parallel models and aggregates their predictions to produce a final, confidence-scored result.
 
 ```mermaid
 graph TD
     A[Input Text] --> B[Text Preprocessing]
-    B --> C[Model Router]
-    C --> D1[Classic AI<br/>Passive Aggressive + TF-IDF]
-    C --> D2[Modern AI<br/>RoBERTa Transformer]
-    C --> D3[Rule-Based<br/>spaCy + Keywords]
-    D1 --> E[Prediction Aggregation]
+    B --> C{Choose Model}
+    C --> D1[**Classic AI**<br/>Passive Aggressive]
+    C --> D2[**Modern AI**<br/>RoBERTa Transformer]
+    C --> D3[**Rule-Based**<br/>Keywords & spaCy]
+    D1 --> E[Aggregate Predictions]
     D2 --> E
     D3 --> E
-    E --> F[Confidence Scoring]
-    F --> G[Result Visualization]
+    E --> F[Calculate Final Confidence]
+    F --> G[Display Result]
 ```
 
-## 🧠 Model Specifications
+### 🧠 The Three Models
 
-### 1. Classic AI: Passive Aggressive Classifier
-- **Algorithm**: Passive Aggressive Classifier with TF-IDF Vectorization
-- **Features**: 5,000 TF-IDF features with n-grams (1,2)
-- **Training**: Online learning with early stopping
-- **Preprocessing**: Optimized text cleaning with regex patterns
-- **Strengths**: Fast inference, low memory usage, interpretable features
+1.  **Classic AI (Passive Aggressive Classifier)**
+    - **How it works:** A fast and efficient machine learning model that learns to distinguish between real and fake news based on word frequency (TF-IDF).
+    - **Strengths:** Extremely fast, requires little memory, and performs exceptionally well on news-style text. **This is our best-performing model.**
 
-### 2. Modern AI: RoBERTa Transformer
-- **Primary Model**: `hamzab/roberta-fake-news-classification`
-- **Fallback Models**: 
-  - `jy46604790/Fake-News-Bert-Detect`
-  - `distilbert-base-uncased-finetuned-sst-2-english`
-- **Architecture**: 12-layer transformer with 125M parameters
-- **Context Length**: 512 tokens maximum
-- **Strengths**: State-of-the-art accuracy, contextual understanding
+2.  **Modern AI (RoBERTa Transformer)**
+    - **How it works:** A large, pre-trained language model (`hamzab/roberta-fake-news-classification`) that understands context and semantic meaning.
+    - **Strengths:** Capable of understanding nuanced language, sarcasm, and complex sentence structures.
 
-### 3. Rule-Based: spaCy + Enhanced Keywords
-- **NLP Engine**: spaCy `en_core_web_sm`
-- **Detection Categories**:
-  - **Sensational**: breaking, shocking, unbelievable, miracle, secret, exclusive
-  - **Uncertain**: allegedly, reportedly, sources say, rumors, claims, supposedly
-  - **Emotional**: outrage, scandal, exposed, truth, lies, hate, destroy
-  - **Clickbait**: you won't believe, shocking truth, they don't want, this will, must see
-- **Scoring Algorithm**: Multi-category confidence weighting
-- **Strengths**: Fast, interpretable, no training required
+3.  **Rule-Based (spaCy + Keywords)**
+    - **How it works:** Scans the text for specific keywords and phrases commonly found in fake news (e.g., "shocking," "secret," "you won't believe").
+    - **Strengths:** Very fast, transparent, and provides instantly understandable reasons for its classification.
 
-## 📊 Performance Benchmarks
+## 📊 Performance
 
-*Evaluated on 300 stratified test samples from the Kaggle Fake News Dataset*
+Evaluated on a 300-sample test set, the **Classic AI model significantly outperformed** the other two. This highlights that for specific tasks like news classification, a well-tuned classic model can be more effective than a general-purpose large language model.
 
-### Model Performance Comparison
+#### Model Performance Comparison
 
-| Model | Accuracy | Precision | Recall | F1-Score | Inference Speed |
-|-------|----------|-----------|--------|----------|----------------|
-| **Classic AI (Passive Aggressive)** | **99.0%** | 98.7% | 99.4% | 99.0% | ~0.01s |
-| **Modern AI (RoBERTa)** | **52.3%** | 80.0% | 22.8% | 35.6% | ~0.15s |
-| **Rule-Based (spaCy)** | **52.0%** | 52.3% | 50.3% | 51.3% | ~0.02s |
+| Model | Accuracy | F1-Score | Inference Speed (GPU) |
+|-------|----------|----------|-----------------------|
+| **Classic AI (Passive Aggressive)** | **99.0%** | **99.0%** | **~0.01s** |
+| **Modern AI (RoBERTa)** | 52.3% | 35.6% | ~0.15s |
+| **Rule-Based (spaCy)**| 52.0% | 51.3% | ~0.02s |
 
-### Detailed Performance Metrics
+<br>
+
+<details>
+<summary><b>Click to see Detailed Performance Metrics</b></summary>
 
 #### Classic AI (Passive Aggressive) - 99.0% Accuracy
 ```
 Confusion Matrix:
-                Predicted
-Actual    Fake    Real
-Fake      153      2
-Real        1    144
-
-Metrics:
-- True Positives (Fake): 153
-- True Negatives (Real): 144  
-- False Positives: 1
-- False Negatives: 2
-- Precision (Fake): 99.4%
-- Recall (Fake): 98.7%
+              Predicted
+Actual      Fake    Real
+  Fake      153      2
+  Real        1    144
+---
+- Precision: 99.4%
+- Recall: 98.7%
 ```
 
 #### Modern AI (RoBERTa) - 52.3% Accuracy
+*The lower performance is likely due to a mismatch between the model's original training data and our specific test dataset.*
 ```
 Confusion Matrix:
-                Predicted
-Actual    Fake    Real
-Fake      124     31
-Real      112     33
-
-Metrics:
-- True Positives (Fake): 124
-- True Negatives (Real): 33
-- False Positives: 112
-- False Negatives: 31
-- Precision (Fake): 52.5%
-- Recall (Fake): 80.0%
+              Predicted
+Actual      Fake    Real
+  Fake      124     31
+  Real      112     33
+---
+- Precision: 52.5%
+- Recall: 80.0%
 ```
 
 #### Rule-Based (spaCy) - 52.0% Accuracy
+*This model provides a solid, interpretable baseline.*
 ```
 Confusion Matrix:
-                Predicted
-Actual    Fake    Real
-Fake       81     74
-Real       70     75
-
-Metrics:
-- True Positives (Fake): 81
-- True Negatives (Real): 75
-- False Positives: 70
-- False Negatives: 74
-- Precision (Fake): 53.6%
-- Recall (Fake): 52.3%
+              Predicted
+Actual      Fake    Real
+  Fake       81     74
+  Real       70     75
+---
+- Precision: 53.6%
+- Recall: 52.3%
 ```
+</details>
 
-### Performance Analysis
-
-#### Classic AI Dominance
-The Passive Aggressive Classifier with TF-IDF achieves exceptional performance (99.0% accuracy) due to:
-- **Optimized feature engineering**: 5,000 carefully selected TF-IDF features
-- **Domain-specific training**: Trained specifically on news text patterns
-- **Balanced dataset**: Equal representation of fake and real news
-- **Effective preprocessing**: Removes noise while preserving signal
-
-#### Modern AI Challenges
-The RoBERTa model's lower performance (52.3% accuracy) can be attributed to:
-- **Domain mismatch**: Pre-trained model may not align with dataset characteristics
-- **Label mapping issues**: Different output formats requiring interpretation
-- **Overfitting to training patterns**: May not generalize well to test distribution
-
-#### Rule-Based Baseline
-The spaCy rule-based approach provides a solid baseline (52.0% accuracy) with:
-- **Interpretable decisions**: Clear reasoning for each prediction
-- **Fast inference**: No model loading or GPU requirements
-- **Robust fallback**: Works when other models fail
-
-## 🚀 Technical Implementation
-
-### Core Dependencies
-```python
-# Machine Learning
-scikit-learn==1.3.0      # Classic ML algorithms
-transformers==4.30.0     # Modern transformer models
-torch==2.0.1             # PyTorch backend
-
-# NLP Processing  
-spacy==3.6.0             # Industrial NLP
-nltk==3.8.1              # Text preprocessing
-
-# Web Interface
-streamlit==1.24.0        # Interactive web app
-matplotlib==3.7.1        # Visualization
-seaborn==0.12.2          # Statistical plots
-```
-
-### Performance Optimizations
-- **Lazy Loading**: Models loaded only when needed
-- **Caching**: Streamlit cache for preprocessing and models
-- **Batch Processing**: Efficient handling of multiple predictions
-- **Memory Management**: Optimized text truncation and feature limits
-- **Error Handling**: Graceful fallbacks for model failures
-
-## � Deployment
-
-### Local Development
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Aimandzikri/Fake_News-Detector.git
-   cd Fake_News-Detector
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   # Windows
-   python -m venv venv
-   .\venv\Scripts\activate
-   
-   # macOS/Linux
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the Streamlit app locally:
-   ```bash
-   streamlit run streamlit_app.py
-   ```
-
-### Deploying to Streamlit Cloud
-
-1. Push your code to GitHub
-2. Go to [Streamlit Cloud](https://share.streamlit.io/)
-3. Click "New app" and select your repository
-4. Set the following configuration:
-   - Repository: `Aimandzikri/Fake_News-Detector`
-   - Branch: `main`
-   - Main file path: `streamlit_app.py`
-5. Click "Deploy!"
-
-### Environment Variables
-
-If your app requires environment variables, set them in the Streamlit Cloud settings under "Advanced settings" when deploying.
-
-## �🛠️ Installation & Setup
+## 🛠️ Installation & Usage
 
 ### Prerequisites
 - Python 3.8+
-- 4GB RAM minimum (8GB recommended)
-- Internet connection for model downloads
+- 4GB of RAM (8GB recommended)
 
-### Quick Start
+### 1. Run Locally
+
+Follow these steps to run the Streamlit app on your own machine.
+
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/fake-news-detector.git
-cd fake-news-detector
+# 1. Clone the repository
+git clone https://github.com/Aimandzikri/Fake_News-Detector.git
+cd Fake_News-Detector
 
-# Install dependencies
+# 2. Create and activate a virtual environment (recommended)
+# On macOS/Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+# On Windows:
+python -m venv venv
+.\venv\Scripts\activate
+
+# 3. Install the required packages
 pip install -r requirements.txt
 
-# Download language models
+# 4. Download the spaCy language model
 python -m spacy download en_core_web_sm
 
-# Run application
-streamlit run src/fake_news_detector.py
+# 5. Run the Streamlit app
+streamlit run streamlit_app.py
 ```
 
-### Advanced Setup
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-venv\Scripts\activate     # Windows
+### 2. Deploy to Streamlit Cloud
 
-# Install with development dependencies
-pip install -r requirements-dev.txt
+1.  Push your code to a GitHub repository.
+2.  Go to [share.streamlit.io](https://share.streamlit.io/) and click "New app".
+3.  Connect your GitHub account and select the repository.
+4.  Ensure the "Main file path" is set to `streamlit_app.py`.
+5.  Click "Deploy!".
 
-# Run tests
-pytest tests/
+## ⚙️ Tech Stack
 
-# Run with GPU support (if available)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-```
-
-## 📈 Usage Examples
-
-### Single Prediction
-```python
-from src.fake_news_detector import OptimizedFakeNewsDetector, ModelType
-
-detector = OptimizedFakeNewsDetector()
-text = "Breaking: Scientists discover miracle cure that doctors don't want you to know!"
-
-# Classic AI prediction
-label, confidence, explanation = detector.predict(text, ModelType.PASSIVE_AGGRESSIVE)
-print(f"Prediction: {label} ({confidence:.1%})")
-```
-
-### Batch Evaluation
-```python
-# Evaluate on test dataset
-results = []
-for text in test_texts:
-    for model_type in ModelType:
-        label, conf, _ = detector.predict(text, model_type)
-        results.append({
-            'text': text,
-            'model': model_type.value,
-            'prediction': label,
-            'confidence': conf
-        })
-```
-
-### Web Interface Features
-- **Quick Analysis**: Single article analysis with model selection
-- **Model Comparison**: Side-by-side results from all three models
-- **Batch Evaluation**: Performance testing on sample datasets
-- **Interactive Visualization**: Confusion matrices and confidence scores
-
-## 🔬 Research Applications
-
-### Academic Use Cases
-- **Misinformation Research**: Analyze patterns in fake news propagation
-- **Model Comparison Studies**: Benchmark different detection approaches
-- **Feature Analysis**: Understand linguistic markers of deception
-- **Dataset Evaluation**: Test model performance on new datasets
-
-### Industry Applications
-- **Content Moderation**: Automated screening of news articles
-- **Fact-Checking Support**: Assist human fact-checkers with initial screening
-- **Media Literacy**: Educational tool for understanding fake news patterns
-- **API Integration**: Embed detection capabilities in existing platforms
-
-## 📊 Dataset Information
-
-### Training Data
-- **Source**: Kaggle Fake News Detection Dataset
-- **Size**: 40,000+ articles (balanced)
-- **Categories**: Political news, general news
-- **Labels**: Binary (Fake/Real)
-- **Features**: Title, text, subject, date
-
-### Evaluation Protocol
-- **Test Size**: 300 stratified samples
-- **Sampling**: Random stratified by label
-- **Metrics**: Accuracy, Precision, Recall, F1-Score
-- **Cross-Validation**: 5-fold for model selection
+- **Web Framework:** Streamlit
+- **Machine Learning:** Scikit-learn, PyTorch
+- **NLP / Transformers:** Hugging Face `transformers`, spaCy, NLTK
+- **Plotting:** Matplotlib, Seaborn
 
 ## 🤝 Contributing
 
-### Development Workflow
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Make changes with tests
-4. Run quality checks (`black`, `flake8`, `pytest`)
-5. Submit pull request
+Contributions are welcome! If you have ideas for improvements or find a bug, please follow these steps:
 
-### Code Standards
-- **Formatting**: Black code formatter
-- **Linting**: Flake8 with custom rules
-- **Testing**: Pytest with >90% coverage
-- **Documentation**: Google-style docstrings
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/my-new-feature`).
+3.  Make your changes and commit them (`git commit -m 'Add some feature'`).
+4.  Push to your branch (`git push origin feature/my-new-feature`).
+5.  Open a Pull Request.
 
-## 📄 License & Citation
-
-### License
-MIT License - see [LICENSE](LICENSE) file for details.
-
-### Citation
-```bibtex
-@software{fake_news_detector_2024,
-  title={AI-Powered Fake News Detector},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/fake-news-detector},
-  note={Multi-model fake news detection system}
-}
-```
+Please ensure your code is formatted with `black` and passes `flake8` linting checks.
 
 ## 🙏 Acknowledgments
 
-- **Hugging Face**: Transformer model infrastructure
-- **spaCy**: Industrial-strength NLP tools
-- **Streamlit**: Interactive web application framework
-- **Kaggle**: Fake news detection dataset
-- **scikit-learn**: Machine learning algorithms
-
----
-
-*For technical support or research collaboration, please open an issue or contact the maintainers.*
+- The **Hugging Face** team for their incredible `transformers` library.
+- The developers of **spaCy** and **scikit-learn** for their powerful and easy-to-use tools.
+- The **Streamlit** team for making it simple to build beautiful data apps.
+- The providers of the **Kaggle Fake News Dataset** used for training.
