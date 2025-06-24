@@ -2,6 +2,8 @@
 
 A high-performance system for detecting fake news using a unique blend of classic machine learning, modern AI, and rule-based methods. This project is designed for accuracy, speed, and transparency, providing clear, explainable results.
 
+Dataset : (https://www.kaggle.com/datasets/emineyetm/fake-news-detection-datasets)
+
 🚀 **[Launch the App](https://fakenewsdetectorpy-passiveaggresive.streamlit.app/)**  
 📺 **[Watch the Demo Video](https://youtu.be/HgOg7ztfMWA)**
 
@@ -152,22 +154,3 @@ streamlit run streamlit_app.py
 - **Machine Learning:** Scikit-learn, PyTorch
 - **NLP / Transformers:** Hugging Face `transformers`, spaCy, NLTK
 - **Plotting:** Matplotlib, Seaborn
-
-## 🤝 Contributing
-
-Contributions are welcome! If you have ideas for improvements or find a bug, please follow these steps:
-
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature/my-new-feature`).
-3.  Make your changes and commit them (`git commit -m 'Add some feature'`).
-4.  Push to your branch (`git push origin feature/my-new-feature`).
-5.  Open a Pull Request.
-
-Please ensure your code is formatted with `black` and passes `flake8` linting checks.
-
-## 🙏 Acknowledgments
-
-- The **Hugging Face** team for their incredible `transformers` library.
-- The developers of **spaCy** and **scikit-learn** for their powerful and easy-to-use tools.
-- The **Streamlit** team for making it simple to build beautiful data apps.
-- The providers of the **Kaggle Fake News Dataset** used for training.
