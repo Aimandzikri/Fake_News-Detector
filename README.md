@@ -1,156 +1,93 @@
-# 🔍 AI-Powered Fake News Detector
+---
 
-A high-performance system for detecting fake news using a unique blend of classic machine learning, modern AI, and rule-based methods. This project is designed for accuracy, speed, and transparency, providing clear, explainable results.
+# 🔍 AI Fake News Detector
 
-Dataset : (https://www.kaggle.com/datasets/emineyetm/fake-news-detection-datasets)
+An AI tool that checks if news is real or fake.
+It uses **three methods** — classic machine learning, modern AI, and rule-based checks — for accuracy and clear results.
 
-🚀 **[Launch the App](https://fakenewsdetectorpy-passiveaggresive.streamlit.app/)**  
-📺 **[Watch the Demo Video](https://youtu.be/HgOg7ztfMWA)**
+**Dataset:** [Kaggle Fake News Dataset](https://www.kaggle.com/datasets/emineyetm/fake-news-detection-datasets)
 
-> ⚠️ *Note: The app may run slower on Streamlit Cloud because it uses CPU processing. The RoBERTa model in particular benefits from GPU acceleration.*
+🚀 **[Launch App](https://fakenewsdetectorpy-passiveaggresive.streamlit.app/)**
+
+📺 **[Watch Demo](https://youtu.be/HgOg7ztfMWA)**
+
+> ⚠️ On Streamlit Cloud, the app may run slower because it uses CPU. The RoBERTa model works faster with GPU.
 
 ---
 
-## 🎯 Key Features
+## 🎯 Features
 
-- **Hybrid Approach:** Combines three different models (Classic ML, Modern Transformer, and Rule-Based) for comprehensive analysis.
-- **High Accuracy:** The primary model achieves **99.0% accuracy** on the test dataset.
-- **Explainable Results:** Understand *why* an article is flagged, with outputs from keyword analysis and model confidence scores.
-- **Interactive Interface:** A user-friendly web app built with Streamlit for easy testing and evaluation.
+* **Hybrid System:** Combines classic ML, modern AI, and keyword rules
+* **High Accuracy:** Best model gets **99% accuracy**
+* **Explainable:** Shows keywords and confidence scores
+* **Easy to Use:** Simple Streamlit web app
 
-## 🏗️ How It Works: System Architecture
-
-The system processes input text through three parallel models and aggregates their predictions to produce a final, confidence-scored result.
-
-```mermaid
-graph TD
-    A[Input Text] --> B[Text Preprocessing]
-    B --> C{Choose Model}
-    C --> D1[**Classic AI**<br/>Passive Aggressive]
-    C --> D2[**Modern AI**<br/>RoBERTa Transformer]
-    C --> D3[**Rule-Based**<br/>Keywords & spaCy]
-    D1 --> E[Aggregate Predictions]
-    D2 --> E
-    D3 --> E
-    E --> F[Calculate Final Confidence]
-    F --> G[Display Result]
-```
-
-### 🧠 The Three Models
-
-1.  **Classic AI (Passive Aggressive Classifier)**
-    - **How it works:** A fast and efficient machine learning model that learns to distinguish between real and fake news based on word frequency (TF-IDF).
-    - **Strengths:** Extremely fast, requires little memory, and performs exceptionally well on news-style text. **This is our best-performing model.**
-
-2.  **Modern AI (RoBERTa Transformer)**
-    - **How it works:** A large, pre-trained language model (`hamzab/roberta-fake-news-classification`) that understands context and semantic meaning.
-    - **Strengths:** Capable of understanding nuanced language, sarcasm, and complex sentence structures.
-
-3.  **Rule-Based (spaCy + Keywords)**
-    - **How it works:** Scans the text for specific keywords and phrases commonly found in fake news (e.g., "shocking," "secret," "you won't believe").
-    - **Strengths:** Very fast, transparent, and provides instantly understandable reasons for its classification.
-
-## 📊 Performance
-
-Evaluated on a 300-sample test set, the **Classic AI model significantly outperformed** the other two. This highlights that for specific tasks like news classification, a well-tuned classic model can be more effective than a general-purpose large language model.
-
-#### Model Performance Comparison
-
-| Model | Accuracy | F1-Score | Inference Speed (GPU) |
-|-------|----------|----------|-----------------------|
-| **Classic AI (Passive Aggressive)** | **99.0%** | **99.0%** | **~0.01s** |
-| **Modern AI (RoBERTa)** | 52.3% | 35.6% | ~0.15s |
-| **Rule-Based (spaCy)**| 52.0% | 51.3% | ~0.02s |
-
-<br>
-
-<details>
-<summary><b>Click to see Detailed Performance Metrics</b></summary>
-
-#### Classic AI (Passive Aggressive) - 99.0% Accuracy
-```
-Confusion Matrix:
-              Predicted
-Actual      Fake    Real
-  Fake      153      2
-  Real        1    144
 ---
-- Precision: 99.4%
-- Recall: 98.7%
-```
 
-#### Modern AI (RoBERTa) - 52.3% Accuracy
-*The lower performance is likely due to a mismatch between the model's original training data and our specific test dataset.*
-```
-Confusion Matrix:
-              Predicted
-Actual      Fake    Real
-  Fake      124     31
-  Real      112     33
+## 🏗️ How It Works
+
+Text goes through **three models** at the same time.
+Their results are combined to give one final prediction.
+
+1. **Classic AI — Passive Aggressive Classifier**
+
+   * Uses word frequency (TF-IDF)
+   * Very fast, small memory use, best accuracy
+
+2. **Modern AI — RoBERTa Transformer**
+
+   * Pre-trained model that understands context and meaning
+   * Good with tricky language and sarcasm
+
+3. **Rule-Based — spaCy + Keywords**
+
+   * Looks for common fake-news words like "shocking" or "secret"
+   * Very fast and easy to understand
+
 ---
-- Precision: 52.5%
-- Recall: 80.0%
-```
 
-#### Rule-Based (spaCy) - 52.0% Accuracy
-*This model provides a solid, interpretable baseline.*
-```
-Confusion Matrix:
-              Predicted
-Actual      Fake    Real
-  Fake       81     74
-  Real       70     75
+## 📊 Model Results (300-sample test)
+
+| Model          | Accuracy  | F1        | Speed (GPU) |
+| -------------- | --------- | --------- | ----------- |
+| **Classic ML** | **99.0%** | **99.0%** | 0.01s       |
+| RoBERTa        | 52.3%     | 35.6%     | 0.15s       |
+| Rule-Based     | 52.0%     | 51.3%     | 0.02s       |
+
 ---
-- Precision: 53.6%
-- Recall: 52.3%
-```
-</details>
 
-## 🛠️ Installation & Usage
+## 🛠️ Run Locally
 
-### Prerequisites
-- Python 3.8+
-- 4GB of RAM (8GB recommended)
-
-### 1. Run Locally
-
-Follow these steps to run the Streamlit app on your own machine.
+**Requirements:** Python 3.8+, 4GB RAM (8GB better)
 
 ```bash
-# 1. Clone the repository
+# 1. Get the code
 git clone https://github.com/Aimandzikri/Fake_News-Detector.git
 cd Fake_News-Detector
 
-# 2. Create and activate a virtual environment (recommended)
-# On macOS/Linux:
-python3 -m venv venv
-source venv/bin/activate
-
-# On Windows:
+# 2. (Optional) Create virtual environment
 python -m venv venv
-.\venv\Scripts\activate
+source venv/bin/activate   # Windows: venv\Scripts\activate
 
-# 3. Install the required packages
+# 3. Install packages
 pip install -r requirements.txt
 
-# 4. Download the spaCy language model
+# 4. Download spaCy model
 python -m spacy download en_core_web_sm
 
-# 5. Run the Streamlit app
+# 5. Run the app
 streamlit run streamlit_app.py
 ```
 
-### 2. Deploy to Streamlit Cloud
+---
 
-1.  Push your code to a GitHub repository.
-2.  Go to [share.streamlit.io](https://share.streamlit.io/) and click "New app".
-3.  Connect your GitHub account and select the repository.
-4.  Ensure the "Main file path" is set to `streamlit_app.py`.
-5.  Click "Deploy!".
+## ⚙️ Tech Used
 
-## ⚙️ Tech Stack
+* **Frontend:** Streamlit
+* **ML:** Scikit-learn, PyTorch
+* **NLP:** Hugging Face Transformers, spaCy, NLTK
+* **Plots:** Matplotlib, Seaborn
 
-- **Web Framework:** Streamlit
-- **Machine Learning:** Scikit-learn, PyTorch
-- **NLP / Transformers:** Hugging Face `transformers`, spaCy, NLTK
-- **Plotting:** Matplotlib, Seaborn
+---
+
+Do you want me to also make a **super-short one-page version** for this so it’s even easier to scan? That could make your README faster to read.
